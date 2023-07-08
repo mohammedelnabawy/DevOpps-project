@@ -1,5 +1,5 @@
 variable "REGION" {
-    type = string
+  type        = string
     description = "value"
 }
 variable "VPC_CIDR" {
@@ -40,14 +40,18 @@ variable "SONARQUBE_INSTANCE_TYPE" {
   type = string
 }
 
-variable "NEXUS_INSTANCE-TYPE" {
+variable "NEXUS_INSTANCE_TYPE" {
   type = string
 }
 
-variable "JENKINS-INSTANCE_TYPE" {
+variable "JENKINS_INSTANCE_TYPE" {
   type = string
 }
 
 variable "BASTION_INSTANCE_TYPE" {
+  type = string
+}
+
+variable "SECRET_ARN" {
   type = string
 }

@@ -1,6 +1,6 @@
 resource "tls_private_key" "pk" {
-  algorithm   = "RSA"
-  rsa_bits = 1024
+  algorithm = "RSA"
+  rsa_bits  = 1024
 }
 
 resource "aws_key_pair" "ec2" {

@@ -14,6 +14,22 @@ variable "bastion_instance_type" {
   type = string
 }
 
-variable "subnet_id" {
+variable "private_subnet_id" {
+  type = string
+}
+
+variable "public_subnet_id" {
+  type = string
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "vpc_cider" {
+  type = string
+}
+
+variable "secret_arn" {
   type = string
 }
