@@ -35,3 +35,19 @@ variable "AZ_2" {
   type        = string
   description = ""
 }
+
+variable "SONARQUBE_INSTANCE_TYPE" {
+  type = string
+}
+
+variable "NEXUS_INSTANCE-TYPE" {
+  type = string
+}
+
+variable "JENKINS-INSTANCE_TYPE" {
+  type = string
+}
+
+variable "BASTION_INSTANCE_TYPE" {
+  type = string
+}
