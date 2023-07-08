@@ -1,3 +1,3 @@
-resource "aws_eip" "byoip-ip" {
+resource "aws_eip" "elastic-ip" {
   domain           = "vpc"
 }   

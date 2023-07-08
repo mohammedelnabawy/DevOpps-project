@@ -13,3 +13,12 @@ variable "private-cider-1" {
 variable "private-cider-2" {
   type = string
 }
+variable "az_1" {
+  type        = string
+  description = ""
+}
+
+variable "az_2" {
+  type        = string
+  description = ""
+}
