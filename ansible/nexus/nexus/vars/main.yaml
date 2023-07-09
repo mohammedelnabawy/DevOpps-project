@@ -1,0 +1,12 @@
+JAVA_package: openjdk-8-jdk
+port_num: 8081
+protocol: tcp
+nexus_url: https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+
+files:
+  - {src: "nexus.rc", dest: "/opt/nexus/bin"}
+  - {src: "nexus.service", dest: "/etc/systemd/system"}
+
+directories:
+  - /opt/sonatype-work
+  - /opt/nexus

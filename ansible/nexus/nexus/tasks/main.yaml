@@ -1,0 +1,64 @@
+- name: yum-update
+  apt:
+    update_cache: yes
+
+- name: install-java
+  apt:
+    name: '{{JAVA_package}}'
+    state: present
+
+# - name: Permit firewall ports
+#   firewalld:
+#     port: "{{port_num}}/{{protocol}}"
+#     permanent: yes
+#     immediate: yes
+#     state: enabled
+
+- name: Download-nexus
+  ansible.builtin.get_url:
+    url: '{{nexus_url}}'
+    dest: /opt/nexus3.tar.gz
+    mode: '0644'
+  register: nexus_installed
+
+- name: tar-file
+  ansible.builtin.unarchive:
+    src: /opt/nexus3.tar.gz
+    dest: /opt
+    remote_src: yes
+  when: nexus_installed.changed==true
+  register: unarchived
+
+- name: rename
+  command: mv /opt/nexus-3.57.0-01 /opt/nexus
+  when: unarchived.changed==true
+
+- name: Add the user 'nexus'
+  ansible.builtin.user:
+    name: nexus
+    comment: nexus
+
+- name: Recursively change ownership of nexus directory
+  ansible.builtin.file:
+    path: '{{item}}'
+    state: directory
+    recurse: yes
+    owner: nexus
+    group: nexus
+  loop: 
+    "{{directories}}"
+
+- name: Copy file nexus.rc and exus.service
+  ansible.builtin.copy:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+    owner: nexus
+    group: nexus
+  loop:
+    "{{files}}"
+
+- name: Enable nexus
+  ansible.builtin.service:
+    name: nexus
+    state: started
+    enabled: yes
