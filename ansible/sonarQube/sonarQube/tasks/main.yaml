@@ -1,0 +1,107 @@
+- name: apt-update
+  apt:
+    update_cache: yes
+
+- name: "Install packages"
+  apt: 
+    name: '{{ item }}' 
+    state: present
+  loop:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+    - python3-psycopg2
+    - acl
+
+- name: "Ensure the PostgreSQL service is running"
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: "Create db user"
+  become: true
+  become_user: postgres
+  postgresql_user:
+    state: present
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+
+- name: Create the database specified in vars
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: '{{ db_name }}'
+    state: present
+    owner: "{{ db_user }}"
+
+- name: "Grant db user access to app db"
+  become: true
+  become_user: postgres
+  postgresql_privs:
+    type: database
+    database: "{{ db_name }}"
+    roles: "{{ db_user }}"
+    grant_option: no
+    privs: all
+
+
+- name: apt-update
+  apt:
+    update_cache: yes
+
+- name: "Install packages"
+  apt: 
+    name: '{{ item }}' 
+    state: present
+  loop:
+    - openjdk-11-jdk
+    - zip
+
+- name: Download sonarqube
+  ansible.builtin.get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.3.zip
+    dest: /opt/sonarqube-7.3.zip
+    mode: '0644'
+  register: sonarqube_download
+
+- name: Extract foo.tgz into /var/lib/foo
+  ansible.builtin.unarchive:
+    src: /opt/sonarqube-7.3.zip
+    dest: /opt
+    remote_src: yes
+  when: sonarqube_download.changed==true
+  register: unarchived
+
+- name: rename
+  command: mv /opt/sonarqube-7.3 /opt/sonarqube
+  when: unarchived.changed==true
+
+- name: Add the user 'sonar'
+  ansible.builtin.user:
+    name: sonar
+    create_home: false 
+    comment: sonar
+
+- name: Recursively change ownership of sonar directory
+  ansible.builtin.file:
+    path: /opt/sonarqube
+    state: directory
+    recurse: yes
+    owner: sonar
+    group: sonar
+
+- name: copy files
+  ansible.builtin.copy:
+    src: '{{item.src}}'
+    dest: '{{item.dest}}'
+    owner: sonar
+    group: sonar
+  loop:
+    "{{files}}"
+
+- name: Restart service cron on centos, in all cases, also issue daemon-reload to pick up config changes
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    name: sonar

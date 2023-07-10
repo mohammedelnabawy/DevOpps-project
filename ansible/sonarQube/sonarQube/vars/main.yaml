@@ -1,0 +1,7 @@
+db_user: sonar
+db_password: Passw0rd
+db_name: sonarqube
+
+files:
+  - {src: "sonar.properties", dest: "/opt/sonarqube/conf"}
+  - {src: "sonar.service", dest: "/etc/systemd/system"}

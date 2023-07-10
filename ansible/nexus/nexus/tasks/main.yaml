@@ -7,13 +7,6 @@
     name: '{{JAVA_package}}'
     state: present
 
-# - name: Permit firewall ports
-#   firewalld:
-#     port: "{{port_num}}/{{protocol}}"
-#     permanent: yes
-#     immediate: yes
-#     state: enabled
-
 - name: Download-nexus
   ansible.builtin.get_url:
     url: '{{nexus_url}}'
