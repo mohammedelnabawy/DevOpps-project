@@ -1,0 +1,14 @@
+- name: nexus
+  hosts: tag_Name_nexus
+  roles:
+    - nexus
+
+- name: jenkins
+  hosts: tag_Name_jenkins
+  roles:
+    - jenkins
+
+- name: sonarQube
+  hosts: tag_Name_sonarQube
+  roles:
+    - sonarQube

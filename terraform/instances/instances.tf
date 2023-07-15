@@ -24,10 +24,14 @@ resource "aws_instance" "SonarQube" {
   instance_type               = var.SonarQube_instance_type
   key_name                    = aws_key_pair.ec2.id
   vpc_security_group_ids      = [aws_security_group.allow_ssh-for-instances.id, aws_security_group.sonarQube_sec_group.id]
-  subnet_id                   = var.private_subnet_id
-
+  associate_public_ip_address = true
+  subnet_id                   = var.public_subnet_id
+  user_data = <<-EOF
+              echo '${tls_private_key.pk.private_key_openssh}' > /home/ubuntu/server.pem
+              chmod 0400 /home/ubuntu/server.pem
+              EOF
   tags = {
-    Name = "SonarQube"
+    Name = "sonarQube"
   }
 }
 
@@ -36,7 +40,12 @@ resource "aws_instance" "nexus" {
   instance_type               = var.nexus_instance_type
   key_name                    = aws_key_pair.ec2.id
   vpc_security_group_ids      = [aws_security_group.allow_ssh-for-instances.id, aws_security_group.nexus_sec_group.id]
-  subnet_id                   = var.private_subnet_id
+  associate_public_ip_address = true
+  subnet_id                   = var.public_subnet_id
+  user_data = <<-EOF
+            echo '${tls_private_key.pk.private_key_openssh}' > /home/ubuntu/server.pem
+            chmod 0400 /home/ubuntu/server.pem
+            EOF
 
   tags = {
     Name = "nexus"
@@ -48,7 +57,12 @@ resource "aws_instance" "jenkins" {
   instance_type               = var.jenkins_instance_type
   key_name                    = aws_key_pair.ec2.id
   vpc_security_group_ids      = [aws_security_group.allow_ssh-for-instances.id, aws_security_group.jenkins_sec_group.id]
-  subnet_id                   = var.private_subnet_id
+  associate_public_ip_address = true
+  subnet_id                   = var.public_subnet_id
+  user_data = <<-EOF
+              echo '${tls_private_key.pk.private_key_openssh}' > /home/ubuntu/server.pem
+              chmod 0400 /home/ubuntu/server.pem
+              EOF
 
   tags = {
     Name = "jenkins"
