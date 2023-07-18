@@ -1,0 +1,3 @@
+DockerDownloadKey: https://download.docker.com/linux/ubuntu/gpg
+DockerDownloadKeyDist: /tmp/docker.gpg
+dockerArchiveKeyringPath: /usr/share/keyrings/docker-archive-keyring.gpg

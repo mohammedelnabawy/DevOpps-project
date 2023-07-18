@@ -12,3 +12,9 @@
   hosts: tag_Name_sonarQube
   roles:
     - sonarQube
+
+- name: bastion
+  hosts: tag_Name_bastion
+  roles:
+    - bastion
+

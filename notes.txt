@@ -1,1 +1,34 @@
 https://www.jenkins.io/blog/2023/03/27/repository-signing-keys-changing/
+install maven  https://www.digitalocean.com/community/tutorials/install-maven-linux-ubuntu
+build maven app https://spring.io/guides/gs/maven/
+    mvn compile
+    mvn package
+    java -jar target/my-app-1.0-SNAPSHOT.jar
+
+create a war file https://stackoverflow.com/questions/44297430/generate-war-file-using-maven
+https://www.baeldung.com/eclipse-error-web-xml-missing
+
+    First you must define your project with as packaging of war type:
+
+    <groupId>...</groupId>
+    <artifactId>...</artifactId>
+    <version>...</version>
+    <packaging>war</packaging>
+
+    Then you will need to use the maven plugin to generate the war when compiling:
+
+    <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml> 
+            <attachClasses>true</attachClasses>
+            <webResources>
+                <resource>
+                    <directory>src/main/webapp</directory>
+                    <filtering>true</filtering>
+                </resource>
+            </webResources>
+        </configuration>
+    </plugin>
+
+mvn -DskipTests install

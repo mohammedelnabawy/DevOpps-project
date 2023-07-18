@@ -34,7 +34,7 @@ resource "aws_security_group" "sonarQube_sec_group" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cider]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -42,7 +42,7 @@ resource "aws_security_group" "sonarQube_sec_group" {
     from_port   = 9000
     to_port     = 9000
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cider]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -60,7 +60,7 @@ resource "aws_security_group" "nexus_sec_group" {
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cider]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -68,7 +68,7 @@ resource "aws_security_group" "nexus_sec_group" {
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cider]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -86,7 +86,7 @@ resource "aws_security_group" "jenkins_sec_group" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cider]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
