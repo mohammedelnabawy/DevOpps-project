@@ -23,7 +23,7 @@
   register: unarchived
 
 - name: rename
-  command: mv /opt/nexus-3.57.0-01 /opt/nexus
+  shell: mv /opt/nexus-3.* /opt/nexus
   when: unarchived.changed==true
 
 - name: Add the user 'nexus'

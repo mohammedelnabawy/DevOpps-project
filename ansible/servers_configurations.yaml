@@ -1,20 +1,21 @@
-- name: nexus
-  hosts: tag_Name_nexus
-  roles:
-    - nexus
+# - name: nexus
+#   hosts: tag_Name_nexus
+#   roles:
+#     - nexus
 
 - name: jenkins
   hosts: tag_Name_jenkins
   roles:
     - jenkins
+    - docker
 
-- name: sonarQube
-  hosts: tag_Name_sonarQube
-  roles:
-    - sonarQube
+# - name: sonarQube
+#   hosts: tag_Name_sonarQube
+#   roles:
+#     - sonarQube
 
-- name: bastion
-  hosts: tag_Name_bastion
-  roles:
-    - bastion
+# - name: bastion
+#   hosts: tag_Name_jenkins
+#   roles:
+#     - bastion
 
